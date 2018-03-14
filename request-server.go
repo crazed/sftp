@@ -127,6 +127,10 @@ func (rs *RequestServer) Serve() error {
 		}
 
 		pkt, err = makePacket(rxPacket{fxp(pktType), pktBytes})
+		if err == errUnknownExtendedPacket {
+			rs.serverConn.sendError(pkt, ErrSshFxOpUnsupported)
+			continue
+		}
 		if err != nil {
 			debug("makePacket err: %v", err)
 			rs.conn.Close() // shuts down recvPacket
