@@ -897,6 +897,7 @@ func (p *sshFxpExtendedPacket) UnmarshalBinary(b []byte) error {
 	case "posix-rename@openssh.com":
 		p.SpecificPacket = &sshFxpExtendedPacketPosixRename{}
 	default:
+		fmt.Println("unknown extended packet type:", p.ExtendedRequest)
 		return errUnknownExtendedPacket
 	}
 
